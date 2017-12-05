@@ -2,7 +2,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, Event
+from dash.dependencies import Input, Output, Event, State
 import model as m
 
 # Run with: python app.py
@@ -321,16 +321,37 @@ for id in id_list:
 
 # Update Results
 @app.callback(Output('table', 'children'), [
-    Input('getResults', 'n_clicks')
+    Input('getResults', 'n_clicks')],
+    [
+    State('apartment', 'value'),
+    State('alone', 'value'),
+    State('warm', 'value'),
+    State('cold', 'value'),
+    State('family', 'value'),
+    State('kids', 'value'),
+    State('otherdogs', 'value'),
+    State('strangers', 'value'),
+    State('train', 'value'),
+    State('groom', 'value'),
+    State('shed', 'value'),
+    State('drool', 'value'),
+    State('energy', 'value'),
+    State('exercise', 'value'),
+    State('playful', 'value'),
+    State('novice', 'value'),
+    State('size', 'value'),
+    State('bark', 'value'),
+
     ])
 
-def table_update(num_clicks):
+def table_update(num_clicks,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i18):
     if (num_clicks>0):
+        updateAnswers(i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i18)
         return generate_table()
 
 def generate_table():
-    #updateAnswers() TODO:
     dataframe = getResults(answers)
+    #print(answers)
     max_rows=10
     return html.Table(
         # Header
@@ -347,8 +368,11 @@ def getResults(answer_dict):
     return m.createTable(answer_dict)
 
 # Read Quiz Answers
-# TODO:
-
+def updateAnswers(*args):
+    count=0
+    for i in args:
+        answers[id_list[count]] = i
+        count+=1
 
 
 if __name__ == '__main__':
