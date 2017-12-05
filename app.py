@@ -3,8 +3,10 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, Event
+import model as m
 
 # Run with: python app.py
+answers = {}
 
 # Setup app
 app = dash.Dash()
@@ -289,13 +291,19 @@ app.layout = html.Div(
             [
                 html.H4(children='Recommendations'),
                 html.Button('Get my results!', id='getResults'),
-                #generate_table(df)
             ]
+        ),
+        html.Div(id='hiddendiv'),
+        #html.Div(id=‘hiddendiv’, style={‘display’:‘none’}),
+        html.Div(
+            [
+                html.Table(id='table')
+            ], 
+            #style={'width': '49%','display': 'inline-block', 'padding': '0 20'}
         )
+
     ]
 )
-
-#
 
 # Reset all buttons
 id_list = ['apartment','alone','warm','cold','family','kids','otherdogs','strangers','train','groom','shed','drool','energy','exercise','playful','novice','size','bark']
@@ -309,19 +317,37 @@ for id in id_list:
     new_callback = create_reset_callback(id)
     app.callback(Output(component_id=id,component_property='value'), [Input('reset', 'n_clicks')])(new_callback)
 
-# Generate Results
 
-#def generate_table(dataframe, max_rows=10):
-#    if()
-#    return html.Table(
-#        # Header
-#        [html.Tr([html.Th(col) for col in dataframe.columns])] +
-#
-#        # Body
-#        [html.Tr([
-#            html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
-#        ]) for i in range(min(len(dataframe), max_rows))]
-#    )
+
+# Update Results
+@app.callback(Output('table', 'children'), [
+    Input('getResults', 'n_clicks')
+    ])
+
+def table_update(num_clicks):
+    if (num_clicks>0):
+        return generate_table()
+
+def generate_table():
+    #updateAnswers() TODO:
+    dataframe = getResults(answers)
+    max_rows=10
+    return html.Table(
+        # Header
+        [html.Tr([html.Th(col) for col in dataframe.columns])] +
+
+        # Body
+        [html.Tr([
+            html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
+        ]) for i in range(min(len(dataframe), max_rows))]
+    )
+
+# Get Results
+def getResults(answer_dict):
+    return m.createTable(answer_dict)
+
+# Read Quiz Answers
+# TODO:
 
 
 
