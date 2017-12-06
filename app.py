@@ -1,9 +1,19 @@
 # -*- coding: utf-8 -*-
+import pandas as pd
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, Event, State
 import model as m
+import os
+
+scriptdir = os.path.dirname(os.path.realpath(__file__))
+datadir = os.path.join(scriptdir,'scraper')
+all_ratings_path = os.path.join(datadir,'all_ratings.csv')
+
+# import ratings
+ratings_df = pd.read_csv(all_ratings_path)
+ratings_df.set_index('Breed',inplace=True)
 
 # Run with: python app.py
 answers = {}
@@ -91,7 +101,7 @@ app.layout = html.Div(
         html.Div([html.H6('Personality')]),
         html.Div('Do you require a dog that is...'),
 
-        html.Div( 
+        html.Div(
             [
 
                 html.Label('...affectionate with family?'),
@@ -142,7 +152,7 @@ app.layout = html.Div(
         html.Hr(style={'margin': '5', 'margin-bottom': '5'}),
         html.Div([html.H6('Energy Level')]),
 
-        html.Div( 
+        html.Div(
             [
 
 
@@ -180,7 +190,7 @@ app.layout = html.Div(
 
 
 
-                
+
 
 
             ],
@@ -191,7 +201,7 @@ app.layout = html.Div(
         html.Div([html.H6('Training & Care')]),
         html.Div('Is it important that your dog...'),
 
-        html.Div( 
+        html.Div(
             [
 
                 html.Label('...is easy to train?'),
@@ -245,7 +255,7 @@ app.layout = html.Div(
         html.Hr(style={'margin': '5', 'margin-bottom': '5'}),
         html.Div([html.H6('Skill & Preferences')]),
 
-        html.Div( 
+        html.Div(
             [
 
                 html.Label('Are you a novice dog owner?'),
@@ -280,7 +290,6 @@ app.layout = html.Div(
                     labelStyle={'display': 'inline-block'}
                 ),
 
-
             ],
             style={'columnCount': 4},
         ),
@@ -298,7 +307,7 @@ app.layout = html.Div(
         html.Div(
             [
                 html.Table(id='table')
-            ], 
+            ],
             #style={'width': '49%','display': 'inline-block', 'padding': '0 20'}
         )
 
@@ -317,31 +326,29 @@ for id in id_list:
     new_callback = create_reset_callback(id)
     app.callback(Output(component_id=id,component_property='value'), [Input('reset', 'n_clicks')])(new_callback)
 
-
-
 # Update Results
-@app.callback(Output('table', 'children'), [
-    Input('getResults', 'n_clicks')],
+@app.callback(
+    Output('table', 'children'),
+    [Input('getResults', 'n_clicks')],
     [
-    State('apartment', 'value'),
-    State('alone', 'value'),
-    State('warm', 'value'),
-    State('cold', 'value'),
-    State('family', 'value'),
-    State('kids', 'value'),
-    State('otherdogs', 'value'),
-    State('strangers', 'value'),
-    State('train', 'value'),
-    State('groom', 'value'),
-    State('shed', 'value'),
-    State('drool', 'value'),
-    State('energy', 'value'),
-    State('exercise', 'value'),
-    State('playful', 'value'),
-    State('novice', 'value'),
-    State('size', 'value'),
-    State('bark', 'value'),
-
+        State('apartment', 'value'),
+        State('alone', 'value'),
+        State('warm', 'value'),
+        State('cold', 'value'),
+        State('family', 'value'),
+        State('kids', 'value'),
+        State('otherdogs', 'value'),
+        State('strangers', 'value'),
+        State('train', 'value'),
+        State('groom', 'value'),
+        State('shed', 'value'),
+        State('drool', 'value'),
+        State('energy', 'value'),
+        State('exercise', 'value'),
+        State('playful', 'value'),
+        State('novice', 'value'),
+        State('size', 'value'),
+        State('bark', 'value'),
     ])
 
 def table_update(num_clicks,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i18):
@@ -365,7 +372,7 @@ def generate_table():
 
 # Get Results
 def getResults(answer_dict):
-    return m.createTable(answer_dict)
+    return m.createTable(answer_dict,ratings_df)
 
 # Read Quiz Answers
 def updateAnswers(*args):
@@ -373,7 +380,6 @@ def updateAnswers(*args):
     for i in args:
         answers[id_list[count]] = i
         count+=1
-
 
 if __name__ == '__main__':
     app.run_server(debug=True)
