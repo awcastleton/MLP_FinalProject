@@ -27,6 +27,29 @@ external_css = ["https://fonts.googleapis.com/css?family=Overpass:300,300i",
 for css in external_css:
     app.css.append_css({"external_url": css})
 
+row_style4 = {
+    'height':'120px',
+    'width':'100%',
+    'whiteSpace':'nowrap',
+    'textAlign':'center',
+    'margin':'1em 0',
+    'columnCount':4}
+
+row_style3 = {
+    'height':'120px',
+    'width':'100%',
+    'whiteSpace':'nowrap',
+    'textAlign':'center',
+    'margin':'1em 0',
+    'columnCount':3}
+
+question_style = {
+    'maxWidth':'100px',
+    'maxHeight':'120px',
+    'verticalAlign':'middle',
+    'margin-left':'2%',
+    'margin-right':'2%'}
+
 # Define App Layout
 app.layout = html.Div(
     [
@@ -53,48 +76,54 @@ app.layout = html.Div(
 
         html.Div(
             [
+                html.Div([
+                    html.Label('Do you live in an apartment?'),
+                    dcc.RadioItems(
+                        id='apartment',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('Do you live in an apartment?'),
-                dcc.RadioItems(
-                    id='apartment',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
+                html.Div([
+                    html.Label('Would your dog be alone a lot?'),
+                    dcc.RadioItems(
+                        id='alone',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('Would your dog be alone a lot?'),
-                dcc.RadioItems(
-                    id='alone',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
+                html.Div([
+                    html.Label('Does your dog need to tolerate warm weather?'),
+                    dcc.RadioItems(
+                        id='warm',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('Does your dog need to tolerate warm weather?'),
-                dcc.RadioItems(
-                    id='warm',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
-
-                html.Label('Does your dog need to tolerate cold weather?'),
-                dcc.RadioItems(
-                    id='cold',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
-            ],
-            style={'columnCount': 4},
+                html.Div([
+                    html.Label('Does your dog need to tolerate cold weather?'),
+                    dcc.RadioItems(
+                        id='cold',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
+            ],style=row_style4,
         ),
 
         html.Hr(style={'margin': '5', 'margin-bottom': '5'}),
@@ -103,49 +132,56 @@ app.layout = html.Div(
 
         html.Div(
             [
+                html.Div([
+                    html.Label('...affectionate with family?'),
+                    dcc.RadioItems(
+                        id='family',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('...affectionate with family?'),
-                dcc.RadioItems(
-                    id='family',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
+                html.Div([
+                    html.Label('...friendly with kids?'),
+                    dcc.RadioItems(
+                        id='kids',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('...friendly with kids?'),
-                dcc.RadioItems(
-                    id='kids',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
+                html.Div([
+                    html.Label('...friendly with other dogs?'),
+                    dcc.RadioItems(
+                        id='otherdogs',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('...friendly with other dogs?'),
-                dcc.RadioItems(
-                    id='otherdogs',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
-
-                html.Label('...friendly toward strangers?'),
-                dcc.RadioItems(
-                    id='strangers',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                )
+                html.Div([
+                    html.Label('...friendly toward strangers?'),
+                    dcc.RadioItems(
+                        id='strangers',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    )
+                ],style=question_style),
 
             ],
-            style={'columnCount': 4},
+            style=row_style4,
         ),
 
 
@@ -154,47 +190,50 @@ app.layout = html.Div(
 
         html.Div(
             [
+                html.Div([
+                    html.Label('Do you prefer a low, medium, or high energy dog?'),
+                    dcc.RadioItems(
+                        id='energy',
+                        options=[
+                            {'label': 'Low', 'value': 'low'},
+                            {'label': 'Medium', 'value': 'medium'},
+                            {'label': 'High', 'value': 'high'}
+                        ],
+                        labelStyle={'display': 'inline-block'}
+                    ),
+                    html.Br()
+                ],style=question_style),
 
+                html.Div([
+                    html.Label('Will you be able to regularly exercise your dog?'),
+                    dcc.RadioItems(
+                        id='exercise',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('Do you prefer a low, medium, or high energy dog?'),
-                dcc.RadioItems(
-                    id='energy',
-                    options=[
-                        {'label': 'Low', 'value': 'low'},
-                        {'label': 'Medium', 'value': 'medium'},
-                        {'label': 'High', 'value': 'high'}
-                    ],
-                    labelStyle={'display': 'inline-block'}
-                ),
+                html.Div([
+                    html.Label('Is it important that your dog is playful?'),
+                    dcc.RadioItems(
+                        id='playful',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('Will you be able to regularly exercise your dog?'),
-                dcc.RadioItems(
-                    id='exercise',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
-
-
-                html.Label('Is it important that your dog is playful?'),
-                dcc.RadioItems(
-                    id='playful',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
-
-
-
-
-
+                # html.Div([
+                #     # placeholder
+                # ],style=question_style),
 
             ],
-            style={'columnCount': 4},
+            style=row_style3,
         ),
 
         html.Hr(style={'margin': '5', 'margin-bottom': '5'}),
@@ -203,53 +242,56 @@ app.layout = html.Div(
 
         html.Div(
             [
+                html.Div([
+                    html.Label('...is easy to train?'),
+                    dcc.RadioItems(
+                        id='train',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('...is easy to train?'),
-                dcc.RadioItems(
-                    id='train',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
+                html.Div([
+                    html.Label('...is easy to groom?'),
+                    dcc.RadioItems(
+                        id='groom',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
+                html.Div([
+                    html.Label('...does not shed much?'),
+                    dcc.RadioItems(
+                        id='shed',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('...is easy to groom?'),
-                dcc.RadioItems(
-                    id='groom',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
-
-                html.Label('...does not shed much?'),
-                dcc.RadioItems(
-                    id='shed',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
-
-                html.Label('...does not drool much?'),
-                dcc.RadioItems(
-                    id='drool',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
-
-
-
+                html.Div([
+                    html.Label('...does not drool much?'),
+                    dcc.RadioItems(
+                        id='drool',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
             ],
-            style={'columnCount': 4},
+            style=row_style4,
         ),
 
         html.Hr(style={'margin': '5', 'margin-bottom': '5'}),
@@ -257,41 +299,55 @@ app.layout = html.Div(
 
         html.Div(
             [
+                html.Div([
+                    html.Label('Are you a novice dog owner?'),
+                    dcc.RadioItems(
+                        id='novice',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('Are you a novice dog owner?'),
-                dcc.RadioItems(
-                    id='novice',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    #labelStyle={'display': 'inline-block'}
-                ),
+                # html.Br(),
 
+                html.Div([
+                    html.Label('Do you have a preference for small, medium, or large dogs?'),
+                    dcc.RadioItems(
+                        id='size',
+                        options=[
+                            {'label': 'Small', 'value': 'small'},
+                            {'label': 'Medium', 'value': 'medium'},
+                            {'label': 'Large', 'value': 'large'}
+                        ],
+                        labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
 
-                html.Label('Do you have a preference for small, medium, or large dogs?'),
-                dcc.RadioItems(
-                    id='size',
-                    options=[
-                        {'label': 'Small', 'value': 'small'},
-                        {'label': 'Medium', 'value': 'medium'},
-                        {'label': 'Large', 'value': 'large'}
-                    ],
-                    labelStyle={'display': 'inline-block'}
-                ),
+                html.Br(),
 
-                html.Label('Is it important that your dog does not bark frequently?'),
-                dcc.RadioItems(
-                    id='bark',
-                    options=[
-                        {'label': 'Yes', 'value': 1},
-                        {'label': 'No', 'value': 0}
-                    ],
-                    labelStyle={'display': 'inline-block'}
-                ),
+                html.Div([
+                    html.Label('Is it important that your dog does not bark frequently?'),
+                    dcc.RadioItems(
+                        id='bark',
+                        options=[
+                            {'label': 'Yes', 'value': 1},
+                            {'label': 'No', 'value': 0}
+                        ],
+                        labelStyle={'display': 'inline-block'}
+                    ),
+                ],style=question_style),
+
+                # html.Br(),
+
+                # html.Div([
+                #     # placeholder
+                # ],style=question_style),
 
             ],
-            style={'columnCount': 4},
+            style=row_style3,
         ),
         html.Hr(style={'margin': '5', 'margin-bottom': '5'}),
         html.Hr(style={'margin': '5', 'margin-bottom': '5'}),
@@ -310,7 +366,6 @@ app.layout = html.Div(
             ],
             #style={'width': '49%','display': 'inline-block', 'padding': '0 20'}
         )
-
     ]
 )
 
