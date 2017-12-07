@@ -7,12 +7,6 @@ handlers:
   script: app.app
 
 libraries:
-- name: certifi
-  version: "2017.11.5"
-- name: chardet
-  version: "3.0.4"
-- name: click
-  version: "6.7"
 - name: dash
   version: "0.19.0"
 - name: dash-core-components
