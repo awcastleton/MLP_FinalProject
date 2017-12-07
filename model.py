@@ -101,11 +101,11 @@ def createTable(answer_dict,ratings_df):
 		for q_tuple, answer in answers.items():
 			weight = idmap[q_tuple[0]][q_tuple[1]]['weight']
 			diff += (weight * abs(answer - ratings[q_tuple[1]]))**2
-		diffs[breed] = diff
+		diffs[breed] = [diff,ratings['image']]
 
 	# Put it into a DataFrame
 	diffs_df = pd.DataFrame.from_dict(diffs,orient='index')
-	diffs_df.columns = ['distance']
+	diffs_df.columns = ['distance','image']
 	diffs_df.sort_values('distance',inplace=True)
 	diffs_df['Breed'] = diffs_df.index
 
