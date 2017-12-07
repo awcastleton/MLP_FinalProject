@@ -10,3 +10,5 @@ handlers:
 libraries:
 - name: pandas
   version: "0.21.0"
+- name: numpy
+  version: "1.13.3"
