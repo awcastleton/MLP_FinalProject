@@ -107,6 +107,7 @@ def createTable(answer_dict,ratings_df):
 	diffs_df = pd.DataFrame.from_dict(diffs,orient='index')
 	diffs_df.columns = ['distance']
 	diffs_df.sort_values('distance',inplace=True)
+	diffs_df['Breed'] = diffs_df.index
 
 	# TESTING handy-dandy printout of results
 	print(diffs_df)
