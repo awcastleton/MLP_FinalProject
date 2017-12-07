@@ -416,13 +416,17 @@ def generate_table():
     #print(answers)
     max_rows=10
     return html.Table(
-        # Header
-        [html.Tr([html.Th(col) for col in dataframe.columns])] +
-
-        # Body
+        [html.Tr([html.Th('Distance'),html.Th('Breed'),html.Th('')])]
+        +
         [html.Tr([
-            html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
-        ]) for i in range(min(len(dataframe), max_rows))]
+            html.Td(html.H3(dataframe.iloc[i]['distance'])),
+            html.Td(html.H3(dataframe.iloc[i]['Breed']),style={'textAlign':'center'}),
+            html.Td(
+                html.Img(src=dataframe.iloc[i]['image'],style={'maxWidth':'200px','maxHeight':'200px'})
+            )
+        ]) for i in range(min(len(dataframe), max_rows))],
+
+        style={'width':'50%','marginLeft':'25%','marginRight':'25%'}
     )
 
 # Get Results
