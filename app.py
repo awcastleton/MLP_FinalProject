@@ -7,6 +7,9 @@ from dash.dependencies import Input, Output, Event, State
 import model as m
 import os
 
+app = dash.Dash(__name__)
+server = app.server
+
 scriptdir = os.path.dirname(os.path.realpath(__file__))
 datadir = os.path.join(scriptdir,'scraper')
 all_ratings_path = os.path.join(datadir,'all_ratings.csv')
@@ -19,13 +22,15 @@ ratings_df.set_index('Breed',inplace=True)
 answers = {}
 
 # Setup app
-app = dash.Dash()
+#app = dash.Dash()
 
-external_css = ["https://fonts.googleapis.com/css?family=Overpass:300,300i",
-                "https://cdn.rawgit.com/plotly/dash-app-stylesheets/dab6f937fd5548cebf4c6dc7e93a10ac438f5efb/dash-technical-charting.css"]
+#external_css = ["https://fonts.googleapis.com/css?family=Overpass:300,300i",
+#                "https://cdn.rawgit.com/plotly/dash-app-stylesheets/dab6f937fd5548cebf4c6dc7e93a10ac438f5efb/dash-technical-charting.css"]
 
-for css in external_css:
-    app.css.append_css({"external_url": css})
+#for css in external_css:
+#    app.css.append_css({"external_url": css})
+app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
+
 
 row_style4 = {
     'height':'120px',
