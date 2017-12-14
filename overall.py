@@ -11,7 +11,9 @@ def createTable():
 	df['Breed'] = df.index
 	df['distance'] = df['distance'].round(2)
 
-	return df
+	final = df.merge(ratings)[['distance', 'Breed', 'image']]
+
+	return final
 
 if __name__ == '__main__':
 	ratings = pd.read_csv(all_ratings_path)
