@@ -10,3 +10,7 @@ https://mlp-pup.herokuapp.com/
 * Thursday, Dec. 7th: MVP and Sprint-Plan Due
 * Thursday, Dec. 14th: First Iteration Due
 
+
+### Data Source
+www.dogtime.com
+
