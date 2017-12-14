@@ -2,24 +2,13 @@ import pandas as pd
 import sys
 import os
 
+# Directory paths
 scriptdir = os.path.dirname(os.path.realpath(__file__))
 datadir = os.path.join(scriptdir,'scraper')
 logdir = os.path.join(scriptdir,'logs')
 all_ratings_path = os.path.join(datadir,'all_ratings.csv')
 
-# Must return a dataframe
-# answer_dict contains question id as key, followed by user response.
-# If user did not select an answer for a particular question, response is None.
-
-# reference
-# id_list_questions = ['apartment','alone','warm','cold','family','kids','otherdogs','strangers','train','groom','shed','drool','energy','exercise','playful','novice','size','bark']
-# id_list_breedratings = ['Breed', ' Adaptability', ' All Around Friendliness', ' Exercise Needs', ' Health Grooming',
-# ' Trainability','Adapts Well to Apartment Living','Affectionate with Family','Amount Of Shedding','Dog Friendly',
-# 'Drooling Potential','Easy To Groom','Easy To Train','Energy Level','Exercise Needs','Friendly Toward Strangers',
-# 'General Health','Good For Novice Owners','Incredibly Kid Friendly Dogs','Intelligence','Intensity',
-# 'Potential For Mouthiness','Potential For Playfulness','Potential For Weight Gain','Prey Drive','Sensitivity Level',
-# 'Size','Tendency To Bark Or Howl','Tolerates Being Alone','Tolerates Cold Weather','Tolerates Hot Weather','Wanderlust Potential']
-
+# List of breeds to keep ordering the same for distance logging.  Yes this is 100% technical debt
 breeds = ['Pekingese','Bedlington Terrier','Miniature Schnauzer','Lhasa Apso','Shiba Inu','Clumber Spaniel','Kooikerhondje','Akita',
 'Giant Schnauzer','Otterhound','Yorkshire Terrier','Gordon Setter','Boykin Spaniel','Old English Sheepdog','Mutt','Bearded Collie',
 'Australian Shepherd','Sealyham Terrier','Norwegian Elkhound','Pomsky','Fox Terrier','Alaskan Malamute','West Highland White Terrier',
@@ -90,28 +79,6 @@ idmap = {
 		'Tendency To Bark Or Howl'			: {'weight':1,'options':{0:5, 1:1}}}
 }
 
-# for testing purposes only
-test_answers = {
-	'apartment':1,
-	'alone':1,
-	'warm':1,
-	'cold':1,
-	'family':1,
-	'kids':1,
-	'otherdogs':1,
-	'strangers':1,
-	'train':1,
-	'groom':1,
-	'shed':1,
-	'drool':1,
-	'energy':'high',
-	'exercise':1,
-	'playful':1,
-	'novice':1,
-	'size':'large',
-	'bark':1
-}
-
 def createTable(answer_dict,ratings_df):
 
 	# transform according to the above mapping
@@ -136,6 +103,7 @@ def createTable(answer_dict,ratings_df):
 	diffs_df.sort_values('distance',inplace=True)
 	diffs_df['Breed'] = diffs_df.index
 
+	# Logging!
 	logDistances(diffs_df[['Breed','distance']])
 
 	return diffs_df
