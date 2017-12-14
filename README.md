@@ -4,6 +4,10 @@ ML Products Final Project, Fall 2017
 ### View live app here
 https://mlp-pup.herokuapp.com/
 
+
+### Description
+This app provides a user interface that recommends a dog breed based on the user's input to questions and displays the top 10 recommendations.
+
 ### Dates
 * Thursday, Nov. 16th: MVP and Big Picture Due
 * Thursday, Nov. 30th: MVP check-in (no grade)
