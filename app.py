@@ -5,6 +5,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, Event, State
 import model as m
+import overall as o
 import os
 
 app = dash.Dash(__name__)
@@ -54,6 +55,7 @@ question_style = {
     'verticalAlign':'middle',
     'margin-left':'2%',
     'margin-right':'2%'}
+
 
 # Define App Layout
 app.layout = html.Div(
@@ -360,8 +362,16 @@ app.layout = html.Div(
         html.Div(
             [
                 html.H4(children='Recommendations'),
-                html.Button('Get my results!', id='getResults'),
-            ]
+                html.Button('Get results!', id='getResults'),
+                dcc.RadioItems(
+                        id='resultOption',
+                        options=[
+                            {'label': 'My Results', 'value': 1},
+                            {'label': 'Overall Results', 'value': 0}
+                        ],value=1
+                        #labelStyle={'display': 'inline-block'}
+                    ),
+            ],
         ),
         html.Div(id='hiddendiv'),
         #html.Div(id=‘hiddendiv’, style={‘display’:‘none’}),
@@ -386,10 +396,11 @@ for id in id_list:
     new_callback = create_reset_callback(id)
     app.callback(Output(component_id=id,component_property='value'), [Input('reset', 'n_clicks')])(new_callback)
 
+
 # Update Results
 @app.callback(
     Output('table', 'children'),
-    [Input('getResults', 'n_clicks')],
+    [Input('getResults', 'n_clicks'),Input('resultOption','value')],
     [
         State('apartment', 'value'),
         State('alone', 'value'),
@@ -411,32 +422,57 @@ for id in id_list:
         State('bark', 'value'),
     ])
 
-def table_update(num_clicks,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i18):
+def table_update(num_clicks,resultOption,i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i18):
     if (num_clicks>0):
-        updateAnswers(i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i18)
-        return generate_table()
+        if resultOption==1:
+            updateAnswers(i1,i2,i3,i4,i5,i6,i7,i8,i9,i10,i11,i12,i13,i14,i15,i16,i17,i18)
+        return generate_table(resultOption)
 
-def generate_table():
-    dataframe = getResults(answers)
+def generate_table(resultOption):
+    dataframe = pd.DataFrame()
+    if resultOption==1:
+        dataframe = getUserResults(answers)
+    else:
+        dataframe = getOverallResults()
+
     #print(answers)
     max_rows=10
-    return html.Table(
-        [html.Tr([html.Th('Distance'),html.Th('Breed'),html.Th('')])]
-        +
-        [html.Tr([
-            html.Td(html.H3(dataframe.iloc[i]['distance'])),
-            html.Td(html.H3(dataframe.iloc[i]['Breed']),style={'textAlign':'center'}),
-            html.Td(
-                html.Img(src=dataframe.iloc[i]['image'],style={'maxWidth':'200px','maxHeight':'200px'})
-            )
-        ]) for i in range(min(len(dataframe), max_rows))],
+    if resultOption==1:
+        return html.Table(
+            [html.Tr([html.Th('Distance'),html.Th('Breed'),html.Th('')])]
+            +
+            [html.Tr([
+                html.Td(html.H3(dataframe.iloc[i]['distance'])),
+                html.Td(html.H3(dataframe.iloc[i]['Breed']),style={'textAlign':'center'}),
+                html.Td(
+                    html.Img(src=dataframe.iloc[i]['image'],style={'maxWidth':'200px','maxHeight':'200px'})
+                )
+            ]) for i in range(min(len(dataframe), max_rows))],
 
-        style={'width':'50%','marginLeft':'25%','marginRight':'25%'}
-    )
+            style={'width':'50%','marginLeft':'25%','marginRight':'25%'}
+        )
+
+    else:
+        return html.Table(
+            [html.Tr([html.Th('Distance'),html.Th('Breed')])]
+            +
+            [html.Tr([
+                html.Td(html.H3(dataframe.iloc[i]['distance'])),
+                html.Td(html.H3(dataframe.iloc[i]['Breed']),style={'textAlign':'center'}),
+                #html.Td(
+                #    html.Img(src=dataframe.iloc[i]['image'],style={'maxWidth':'200px','maxHeight':'200px'})
+                #)
+            ]) for i in range(min(len(dataframe), max_rows))],
+
+            style={'width':'50%','marginLeft':'25%','marginRight':'25%'}
+        )
 
 # Get Results
-def getResults(answer_dict):
+def getUserResults(answer_dict):
     return m.createTable(answer_dict,ratings_df)
+
+def getOverallResults():
+    return o.createTable()
 
 # Read Quiz Answers
 def updateAnswers(*args):
