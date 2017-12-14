@@ -437,35 +437,19 @@ def generate_table(resultOption):
 
     #print(answers)
     max_rows=10
-    if resultOption==1:
-        return html.Table(
-            [html.Tr([html.Th('Distance'),html.Th('Breed'),html.Th('')])]
-            +
-            [html.Tr([
-                html.Td(html.H3(dataframe.iloc[i]['distance'])),
-                html.Td(html.H3(dataframe.iloc[i]['Breed']),style={'textAlign':'center'}),
-                html.Td(
-                    html.Img(src=dataframe.iloc[i]['image'],style={'maxWidth':'200px','maxHeight':'200px'})
-                )
-            ]) for i in range(min(len(dataframe), max_rows))],
+    return html.Table(
+        [html.Tr([html.Th('Distance'),html.Th('Breed'),html.Th('')])]
+        +
+        [html.Tr([
+            html.Td(html.H3(dataframe.iloc[i]['distance'])),
+            html.Td(html.H3(dataframe.iloc[i]['Breed']),style={'textAlign':'center'}),
+            html.Td(
+                html.Img(src=dataframe.iloc[i]['image'],style={'maxWidth':'200px','maxHeight':'200px'})
+            )
+        ]) for i in range(min(len(dataframe), max_rows))],
 
-            style={'width':'50%','marginLeft':'25%','marginRight':'25%'}
-        )
-
-    else:
-        return html.Table(
-            [html.Tr([html.Th('Distance'),html.Th('Breed')])]
-            +
-            [html.Tr([
-                html.Td(html.H3(dataframe.iloc[i]['distance'])),
-                html.Td(html.H3(dataframe.iloc[i]['Breed']),style={'textAlign':'center'}),
-                #html.Td(
-                #    html.Img(src=dataframe.iloc[i]['image'],style={'maxWidth':'200px','maxHeight':'200px'})
-                #)
-            ]) for i in range(min(len(dataframe), max_rows))],
-
-            style={'width':'50%','marginLeft':'25%','marginRight':'25%'}
-        )
+        style={'width':'50%','marginLeft':'25%','marginRight':'25%'}
+    )
 
 # Get Results
 def getUserResults(answer_dict):
